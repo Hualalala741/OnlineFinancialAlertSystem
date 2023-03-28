@@ -16,7 +16,7 @@ from os.path import basename, dirname, join
 class ScrapyPdfPipeline(FilesPipeline):
 
     def get_media_requests(self, item, info):
-        headers = {'Host': 'static.cninfo.com.cn',
+        headers = {'Host': 'static1.cninfo.com.cn',
                    'Connection': 'keep-alive',
                    'Upgrade-Insecure-Requests': '1',
                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
