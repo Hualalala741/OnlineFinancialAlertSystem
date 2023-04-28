@@ -1,0 +1,91 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+  <div class="container" style="margin-top: 130px">
+    <h1>新闻列表</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>主题</th>
+                <th>发布时间</th>
+                <th>来源</th>
+                <th>新闻态度</th>
+            </tr>
+        </thead>
+        <tbody class="data">
+
+            <!-- add more news items here -->
+        </tbody>
+    </table>
+{#<nav aria-label="Page navigation example">#}
+   <ul class="pagination">
+      {% for foo in lst %}
+          <li ><a href="javascript:void(0)" class="page page-link">{{ foo }}</a></li>
+
+      {% endfor %}
+</ul>
+{#</nav>#}
+{#  <nav aria-label="Page navigation example">#}
+{#  <ul class="pagination">#}
+{#    <li class="page-item"><a class="page-link" href="#">Previous</a></li>#}
+{#    <li class="page-item"><a class="page-link" href="#">1</a></li>#}
+{#    <li class="page-item"><a class="page-link" href="#">2</a></li>#}
+{#    <li class="page-item"><a class="page-link" href="#">3</a></li>#}
+{#    <li class="page-item"><a class="page-link" href="#">Next</a></li>#}
+{#  </ul>#}
+{#</nav>#}
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script>
+ var current_page=1
+
+    $(document).ready(function() {
+          $(".page").click(function (e){
+       console.log($(this).text())
+       current_page=$(this).text()
+       refreshNews()
+
+   })
+
+        // 定义刷新函数
+        function refreshNews() {
+            $.ajax({
+                url: "/loaddata/?page="+current_page,  // 用于接收新闻列表数据的 URL
+                success: function(data) {
+                    // 清空表格内容
+                    var page=data
+                    data=data.data
+                    current_page=page.page
+                    $(".data").empty();
+                    // 循环添加新闻条目
+                    for (var i = 0; i < data.length; i++) {
+
+                        var item = data[i];
+                        var pk=item.pk
+                        item=item.fields
+
+
+                        var row = $("<tr></tr>");
+                        title="<a href='/detail?id="+pk+"'>"+(item.title)+"</a>"
+                        $("<td></td>").html(title).appendTo(row);
+                        $("<td></td>").text(item.date).appendTo(row);
+                        $("<td></td>").text(item.source).appendTo(row);
+                        $("<td></td>").text(item.emo).appendTo(row);
+                        row.appendTo($(".data"));
+
+                    }
+                }
+            });
+        }
+        // 绑定刷新按钮点击事件
+        refreshNews()
+                    var timer = setInterval(refreshNews, 5000);
+
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+  <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-3" style="margin-top: 150px;margin-bottom: 50px">
+                <!-- 文章标题 -->
+                <h1>{{ single_news.title }}</h1>
+                <hr />
+                <!-- 文章作者和时间 -->
+                <p>作者：{{ single_news.source }} | 发布时间：{{ single_news.date }}</p>
+                <!-- 文章内容 -->
+                <p style="word-wrap:break-word;">{{ single_news.article }}</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
